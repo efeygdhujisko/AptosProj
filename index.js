@@ -1,9 +1,14 @@
-const pullAtIndex = (arr, pullArr) => {
-  let removed = [];
-  let pulled = arr
-    .map((v, i) => (pullArr.includes(i) ? removed.push(v) : v))
-    .filter((v, i) => !pullArr.includes(i));
-  arr.length = 0;
-  pulled.forEach((v) => arr.push(v));
-  return removed;
-};
+function findRedundantConnection(edges) {
+  const parent = new Array(edges.length + 1).fill(-1);
+  for (const edge of edges) {
+    const u = find(parent, edge[0]);
+    const v = find(parent, edge[1]);
+    if (u === v) return edge;
+    parent[u] = v;
+  }
+  return [];
+}
+function find(parent, i) {
+  if (parent[i] === -1) return i;
+  return find(parent, parent[i]);
+}
