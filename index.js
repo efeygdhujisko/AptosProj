@@ -1,14 +1,13 @@
-function wordBreak(s, wordDict) {
-  const set = new Set(wordDict);
-  const dp = new Array(s.length + 1).fill(false);
-  dp[0] = true;
-  for (let end = 1; end <= s.length; end++) {
-    for (let start = 0; start < end; start++) {
-      if (dp[start] && set.has(s.substring(start, end))) {
-        dp[end] = true;
-        break;
-      }
+function wiggleMaxLength(nums) {
+  if (nums.length === 0) return 0;
+  let up = 1;
+  let down = 1;
+  for (let i = 1; i < nums.length; i++) {
+    if (nums[i] > nums[i - 1]) {
+      up = down + 1;
+    } else if (nums[i] < nums[i - 1]) {
+      down = up + 1;
     }
   }
-  return dp[s.length];
+  return Math.max(up, down);
 }
